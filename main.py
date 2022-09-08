@@ -5,6 +5,9 @@ import PyQt5
 import menu
 import os
 from sys import exit
+from pygame import font
+import button
+
 
 
 '''
@@ -25,32 +28,49 @@ pygame.mixer.init()
 WIN = pygame.display.set_mode((400,400))
 pygame.display.set_caption('Unraveling worlds?')
 
-'''''
-def draw():
-    WIN.blit(menu,100,300)
-'''
+#game vars
+game_paused = False
 
-def set_difficulty(value, difficulty):
-    # Do the job here !
-    pass
 
-def start_the_game():
-    # Do the job here !
-    pass
+#font defining
 
-menu = pygame_menu.Menu('Welcome', 400, 300,theme=pygame_menu.themes.THEME_BLUE)
-menu.add.text_input('Name :', default='John Doe')
-menu.add.selector('Difficulty :', [('Hard', 1), ('Easy', 2)], onchange=set_difficulty)
-menu.add.button('Play', start_the_game)
-menu.add.button('Quit', pygame_menu.events.EXIT)
+FONT = pygame.font.SysFont('comicsans',40)
+
+#colours
+TEXT_COL = (255,255,255)
+
+
+def draw_text(text,font,text_col,x,y):
+    img = font.render(text, True, text_col)
+    WIN.blit(img, (x,y))
+
+
+
 
 
 #game loop
 while True:
+    if game_paused == True:
+        pass #dispaly menu
+    else:
+
+        draw_text("MENU",FONT,TEXT_COL, 135,150)
+
+
+#evnt handler
     for event in pygame.event.get():
+
+        if event.type ==pygame.KEYDOWN:
+
+            if event.key == pygame.K_SPACE:
+                game_paused = True
+
         if event.type == pygame.QUIT:
             quit()
 
 
 
     pygame.display.update()
+
+
+pygame.quit()
